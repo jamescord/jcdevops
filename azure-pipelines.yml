@@ -1,0 +1,24 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Visual Studio Enterprise Subscription(e1937724-9d18-4771-bc6a-1c40758c8428)'
+    subscriptionId: 'e1937724-9d18-4771-bc6a-1c40758c8428'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'myResourceGroup'
+    location: 'UK South'
+    templateLocation: 'URL of the file'
+    csmFileLink: 'https://raw.githubusercontent.com/jamescord/jcdevops/main/CreateWebApp/LinkedTemplate'
+    overrideParameters: '-projectName Armtemplates'
+    deploymentMode: 'Incremental'
+    deploymentName: 'DeployPipelineTemplate'
